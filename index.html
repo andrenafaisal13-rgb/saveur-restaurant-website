@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saveur – Fine Dining Restaurant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #0f0e0c;
+      color: #f5f0e8;
+      scroll-behavior: smooth;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15,14,12,0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #2a2520;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #c9a96e;
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #b8a898;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #c9a96e; }
+    .nav-cta {
+      background: #c9a96e;
+      color: #0f0e0c;
+      padding: 0.5rem 1.25rem;
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: #e0c088; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #c9a96e;
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    #home {
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background:
+        linear-gradient(rgba(15,14,12,0.55), rgba(15,14,12,0.85)),
+        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400') center/cover no-repeat;
+    }
+    .hero-tag {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c9a96e;
+      margin-bottom: 1.5rem;
+    }
+    #home h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: #f5f0e8;
+    }
+    #home p {
+      font-size: 1rem;
+      color: #9a8a7a;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #c9a96e;
+      color: #0f0e0c;
+      padding: 0.85rem 2rem;
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover { background: #e0c088; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: #f5f0e8;
+      padding: 0.85rem 2rem;
+      border: 1px solid #4a3f35;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { border-color: #c9a96e; color: #c9a96e; }
+
+    /* ── SHARED ── */
+    section { padding: 5rem 2rem; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #c9a96e;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 1rem;
+      color: #f5f0e8;
+    }
+    .section-sub {
+      color: #7a6a5a;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ── MENU ── */
+    #menu { background: #0f0e0c; }
+    .menu-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin: 2.5rem 0;
+      border: 1px solid #2a2520;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 0.65rem 1.75rem;
+      background: transparent;
+      border: none;
+      border-right: 1px solid #2a2520;
+      color: #7a6a5a;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .tab:last-child { border-right: none; }
+    .tab.active, .tab:hover { background: #1a1710; color: #c9a96e; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      text-align: left;
+    }
+    .menu-card {
+      background: #1a1710;
+      border: 1px solid #2a2520;
+      padding: 1.5rem;
+      transition: border-color 0.3s;
+    }
+    .menu-card:hover { border-color: #c9a96e; }
+    .menu-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .menu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: #f5f0e8;
+    }
+    .price {
+      color: #c9a96e;
+      font-weight: 700;
+      font-size: 1rem;
+      white-space: nowrap;
+      margin-left: 0.5rem;
+    }
+    .menu-card p {
+      font-size: 0.82rem;
+      color: #6a5a4a;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .badge-new { background: #1e1608; color: #c9a96e; border: 1px solid #3a2e18; }
+    .badge-chef { background: #0e1a12; color: #5a9e6e; border: 1px solid #1e3a26; }
+    .badge-placeholder { height: 1.6rem; display: block; }
+
+    /* ── ABOUT ── */
+    #about { background: #131210; }
+    .about-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-img {
+      height: 380px;
+      border: 1px solid #2a2520;
+      position: relative;
+      background:
+        linear-gradient(rgba(15,14,12,0.3), rgba(15,14,12,0.5)),
+        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600') center/cover no-repeat;
+    }
+    .about-img::after {
+      content: 'Est. 2010';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      background: #c9a96e;
+      color: #0f0e0c;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      font-weight: 700;
+    }
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .stat { border-left: 2px solid #c9a96e; padding-left: 1rem; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #c9a96e;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #5a4a3a;
+      margin-top: 0.2rem;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: #0f0e0c; text-align: center; }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    .contact-card {
+      background: #1a1710;
+      border: 1px solid #2a2520;
+      padding: 1.5rem 1rem;
+    }
+    .contact-card .icon { font-size: 1.5rem; color: #c9a96e; margin-bottom: 0.75rem; }
+    .contact-card h4 {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #5a4a3a;
+      margin-bottom: 0.4rem;
+    }
+    .contact-card p { font-size: 0.9rem; color: #b8a888; line-height: 1.6; }
+    .reserve-form { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .reserve-form input {
+      flex: 1;
+      min-width: 140px;
+      background: #1a1710;
+      border: 1px solid #2a2520;
+      color: #f5f0e8;
+      padding: 0.75rem 1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .reserve-form input:focus { border-color: #c9a96e; }
+    .reserve-form input::placeholder { color: #4a3a2a; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a0908;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid #1a1510;
+    }
+    footer p { font-size: 0.8rem; color: #3a2a1a; letter-spacing: 1px; }
+    footer span { color: #c9a96e; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #0f0e0c;
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #2a2520;
+        gap: 1.25rem;
+        z-index: 99;
+      }
+      .about-inner { grid-template-columns: 1fr; }
+      .about-img { height: 220px; }
+      .contact-cards { grid-template-columns: 1fr; }
+      .reserve-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#home">SAVEUR</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Reserve</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div>
+    <p class="hero-tag">Fine Dining · Est. 2010</p>
+    <h1>Where Every Bite<br>Tells a Story</h1>
+    <p>Award-winning cuisine crafted from the finest local ingredients. An unforgettable experience for every occasion.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Reserve a Table</button>
+      <button class="btn-outline" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">View Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-inner">
+    <p class="section-label">Our Offerings</p>
+    <h2 class="section-title">Crafted with Passion</h2>
+    <div class="menu-tabs">
+      <button class="tab active" data-cat="Starters">Starters</button>
+      <button class="tab" data-cat="Mains">Mains</button>
+      <button class="tab" data-cat="Desserts">Desserts</button>
+      <button class="tab" data-cat="Drinks">Drinks</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img"></div>
+    <div>
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">A Legacy of Flavor</h2>
+      <p class="section-sub">Born from a passion for authentic cuisine, Saveur has been serving exceptional dishes since 2010. Our chefs source ingredients from local farms and artisan producers to bring you flavors that are both timeless and inventive.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">14+</div>
+          <div class="stat-label">Years serving</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Awards won</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">40k</div>
+          <div class="stat-label">Happy guests</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label">Find Us</p>
+    <h2 class="section-title">Visit & Reserve</h2>
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="icon">📍</div>
+        <h4>Location</h4>
+        <p>12 Rue de la Paix<br>Paris, France</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">🕐</div>
+        <h4>Hours</h4>
+        <p>Mon–Sat<br>12pm – 11pm</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">📞</div>
+        <h4>Phone</h4>
+        <p>+33 1 23 45 67 89</p>
+      </div>
+    </div>
+    <div class="reserve-form">
+      <input type="text" placeholder="Your name" />
+      <input type="text" placeholder="Date & time" />
+      <button class="btn-primary">Book Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Saveur</span> · All rights reserved · Built with HTML, CSS & JavaScript</p>
+</footer>
+
+<script>
+  // Menu data
+  const menus = {
+    Starters: [
+      { badge: 'chef', label: "Chef's Pick", name: 'Seared Scallops', price: '$24', desc: 'Pan-seared scallops with cauliflower purée, crispy capers, and lemon beurre blanc.' },
+      { badge: 'new', label: 'New', name: 'Burrata & Heirloom', price: '$18', desc: 'Creamy burrata with heirloom tomatoes, aged balsamic, fresh basil, and sea salt.' },
+      { badge: '', label: '', name: 'Truffle Arancini', price: '$16', desc: 'Crispy risotto balls filled with black truffle, fontina, and served with aioli.' },
+    ],
+    Mains: [
+      { badge: 'chef', label: "Chef's Pick", name: 'Wagyu Beef Fillet', price: '$58', desc: '200g A5 wagyu, roasted bone marrow butter, pomme purée, and red wine jus.' },
+      { badge: '', label: '', name: 'Lobster Risotto', price: '$42', desc: 'Arborio rice, Atlantic lobster, saffron, mascarpone, and micro herbs.' },
+      { badge: 'new', label: 'New', name: 'Mushroom Wellington', price: '$34', desc: 'Wild mushroom duxelles in golden puff pastry with truffle cream sauce.' },
+    ],
+    Desserts: [
+      { badge: 'chef', label: "Chef's Pick", name: 'Crème Brûlée', price: '$14', desc: 'Classic vanilla custard with a perfectly caramelized sugar crust.' },
+      { badge: 'new', label: 'New', name: 'Chocolate Fondant', price: '$16', desc: 'Warm dark chocolate cake with a molten center, served with vanilla ice cream.' },
+      { badge: '', label: '', name: 'Tarte Tatin', price: '$13', desc: 'Caramelized apple upside-down tart with crème fraîche and calvados.' },
+    ],
+    Drinks: [
+      { badge: '', label: '', name: 'Château Margaux', price: '$95', desc: '2018 Bordeaux, full-bodied red with notes of blackcurrant, cedar, and spice.' },
+      { badge: 'new', label: 'New', name: 'Elderflower Spritz', price: '$12', desc: 'House-made elderflower cordial, Prosecco, cucumber, and fresh mint.' },
+      { badge: '', label: '', name: 'Cold Brew Negroni', price: '$18', desc: 'Gin, Campari, vermouth, cold brew coffee, and an orange peel garnish.' },
+    ],
+  };
+
+  function renderMenu(cat) {
+    const grid = document.getElementById('menuGrid');
+    grid.innerHTML = menus[cat].map(item => `
+      <div class="menu-card">
+        ${item.badge
+          ? `<span class="badge badge-${item.badge}">${item.label}</span>`
+          : `<span class="badge-placeholder"></span>`}
+        <div class="menu-card-top">
+          <h3>${item.name}</h3>
+          <span class="price">${item.price}</span>
+        </div>
+        <p>${item.desc}</p>
+      </div>
+    `).join('');
+  }
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      renderMenu(tab.dataset.cat);
+    });
+  });
+
+  // Initial render
+  renderMenu('Starters');
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
+</body>
+</html>
